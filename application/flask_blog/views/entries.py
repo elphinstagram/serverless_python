@@ -1,5 +1,5 @@
 # flask_blog/views/entries.py
-from flask import request, redirect, url_for, render_template, flash, session
+from flask import request, redirect, url_for, render_template, flash
 from flask_blog import app
 from flask_blog.models.entries import Entry
 from flask_login import login_required
@@ -11,7 +11,7 @@ from datetime import datetime
 @app.route('/')
 @login_required
 def show_entries():
-    entries = Entry. scan()
+    entries = Entry.scan()
     entries = sorted(entries, key=lambda x: x.id, reverse=True)
     return render_template('entries/index.html', entries=entries)
 
@@ -22,9 +22,9 @@ def show_entries():
 @login_required
 def add_entry():
     entry = Entry(id=int(datetime. now(). timestamp()),
-                  title=request. form['title'], text=request.form['text'])
+                  title=request.form['title'], text=request.form['text'])
     entry. save()
-    flash(' 新しく記事が作成されました')
+    flash('新しく記事が作成されました')
     return redirect(url_for('show_entries'))
 
 # new_entry 記事の新規追加フォームを表示
